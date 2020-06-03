@@ -45,12 +45,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.core.io.ByteArrayResource;
 import org.springframework.core.io.FileSystemResource;
+import org.springframework.core.io.Resource;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -175,7 +177,7 @@ public class WxApp {
     public WxMessage image() {
         //String mediaId = wxMediaManager.addTempMedia(WxMedia.Type.VIDEO, new FileSystemResource("路径"));
         return WxMessage.imageBuilder()
-                .mediaUrl("http://img.zcool.cn/community/01f09e577b85450000012e7e182cf0.jpg@1280w_1l_2o_100sh.jpg")
+                .mediaUrl("https://ss0.bdstatic.com/5aV1bjqh_Q23odCf/static/superman/img/logo/logo_white.png")
                 .build();
     }
 
@@ -381,7 +383,14 @@ public class WxApp {
 
     @RequestMapping("mediaUpload")
     public String mediaUpload() {
-        return wxMediaManager.addTempMedia(WxMedia.Type.IMAGE, new FileSystemResource("E:/test.png"));
+        return wxMediaManager.addTempMedia(WxMedia.Type.IMAGE, new FileSystemResource("D:/test.jpg"));
+    }
+
+    @RequestMapping("mediaDownload")
+    public String mediaUpload(String mediaId) throws IOException {
+        Resource resource = wxMediaManager.getTempMedia(mediaId);
+        System.out.println(resource.getURL().toString());
+        return resource.getURI().toString();
     }
 
     @RequestMapping("send")

@@ -16,6 +16,7 @@
 
 package com.mxixm.fastboot.weixin.module.user;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.mxixm.fastboot.weixin.module.adapter.WxJsonAdapters;
@@ -57,7 +58,7 @@ public class WxUser implements Serializable {
         /**
          * 图文页右上角菜单
          */
-        ADD_SCENE_PROFILE_ITEM,
+        ADD_SCENE_PROFILE_LINK,
         /**
          * 支付后关注
          */
@@ -314,6 +315,7 @@ public class WxUser implements Serializable {
         return subscribeScene;
     }
 
+    @JsonIgnore
     public SubscribeScene getSubscribeSceneEnum() {
         return SubscribeScene.valueOf(this.getSubscribeScene());
     }
